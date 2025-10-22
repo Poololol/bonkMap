@@ -1,0 +1,1 @@
+Bonk detection code provided by the [Bonk++ plugin](https://openplanet.dev/plugin/bonkplusplus) (Copyright (c) 2025 Shike)

@@ -1,0 +1,9 @@
+[meta]
+name = "Bonk Map"
+author = "poololol"
+version = "1.0.0"
+description = "Shows where on maps you have crashed (bonked)."
+category = "Overlay"
+
+[script]
+dependencies = ["VehicleState", "Camera", "MLFeedRaceData"]
