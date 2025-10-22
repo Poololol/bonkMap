@@ -1,18 +1,17 @@
 // --- settings.as ---
-// Handles Bonk++ plugin settings definitions, debug logging, and custom UI elements within the Openplanet settings window.
 
 // General Settings
 [Setting category="General" name="Overlay Enabled" description="Show the bonks on the map."]
 bool Setting_Render = true;
 // --- Detection Parameters ---
-[Setting category="General" name="Jerk Sensitivity (Grounded)" description="Required impact sharpness when on 4 wheels.  **LOWER values are MORE sensitive (detects lighter hits)**" min=0.1 max=50.0 beforerender="RenderDetectionHeader"]
-float Setting_SensitivityGrounded = 4.0f;
+[Setting category="General" name="Jerk Sensitivity (Grounded)" description="Required impact sharpness when on 4 wheels.  **LOWER values are MORE sensitive (detects lighter hits)**" min=0.1 max=50 beforerender="RenderDetectionHeader"]
+float Setting_SensitivityGrounded = 4f;
 
-[Setting category="General" name="Jerk Sensitivity (Air/Other)" description="Required impact sharpness when airborne or on fewer wheels.  **LOWER values are MORE sensitive (detects lighter hits)**" min=0.1 max=50.0]
-float Setting_SensitivityAirborne = 4.0f;
+[Setting category="General" name="Jerk Sensitivity (Air/Other)" description="Required impact sharpness when airborne or on fewer wheels.  **LOWER values are MORE sensitive (detects lighter hits)**" min=0.1 max=50]
+float Setting_SensitivityAirborne = 4f;
 
-[Setting category="General" name="Deceleration Threshold (Base)" description="Base value for detecting a significant slowdown. Higher values require a harder stop." min=1.0 max=50.0 hidden]
-float Setting_DecelerationThreshold = 16.0f;
+[Setting category="General" name="Deceleration Threshold (Base)" description="Base value for detecting a significant slowdown. Higher values require a harder stop." min=1 max=50 hidden]
+float Setting_DecelerationThreshold = 16f;
 
 [Setting category="General" name="Time Between Bonks (ms)" description="Minimum time (milliseconds) before another bonk can be played after the previous one." min=300 max=5000]
 uint Setting_BonkDebounce = 400;
@@ -59,27 +58,26 @@ void RenderSettings() {
         positions = {};
         print("Deleted map data!");
     }
-    UI::PushStyleColor(UI::Col::Button, vec4(0.8f, 0.2f, 0.2f, 1.0f)); UI::PushStyleColor(UI::Col::ButtonHovered, vec4(0.9f, 0.3f, 0.3f, 1.0f)); UI::PushStyleColor(UI::Col::ButtonActive, vec4(1.0f, 0.4f, 0.4f, 1.0f));
+    UI::PushStyleColor(UI::Col::Button, vec4(0.8f, 0f, 0f, 1f)); UI::PushStyleColor(UI::Col::ButtonHovered, vec4(0.9f, 0.1f, 0.1f, 1f)); UI::PushStyleColor(UI::Col::ButtonActive, vec4(1f, 0.2f, 0.2f, 1f));
     if (UI::Button("Reset All Data")) {
         UI::OpenPopup("Confirm All-Time Reset");
     }
     UI::PopStyleColor(3);
     if (UI::BeginPopupModal("Confirm All-Time Reset", UI::WindowFlags::AlwaysAutoResize)) {
-        UI::TextWrapped("You really want to reset your All-Time Bonk locations?"); UI::Separator();
-        UI::PushStyleColor(UI::Col::Text, vec4(1.0f, 0.2f, 0.2f, 1.0f)); UI::Text("THIS ACTION CANNOT BE UNDONE."); UI::PopStyleColor(); UI::Separator();
-        UI::PushStyleColor(UI::Col::Button, vec4(0.8f, 0.2f, 0.2f, 1.0f)); UI::PushStyleColor(UI::Col::ButtonHovered, vec4(0.9f, 0.3f, 0.3f, 1.0f)); UI::PushStyleColor(UI::Col::ButtonActive, vec4(1.0f, 0.4f, 0.4f, 1.0f));
-        if (UI::Button("YES, RESET STATS", vec2(220, 0))) { 
+        UI::TextWrapped("Do you really want to delete all of your bonk locations across every map?"); UI::Separator();
+        UI::PushStyleColor(UI::Col::Text, vec4(1f, 0f, 0f, 1f)); UI::Text("THIS ACTION CANNOT BE UNDONE."); UI::PopStyleColor(); UI::Separator();
+        UI::PushStyleColor(UI::Col::Button, vec4(0.8f, 0f, 0f, 1f)); UI::PushStyleColor(UI::Col::ButtonHovered, vec4(0.9f, 0.1f, 0.1f, 1f)); UI::PushStyleColor(UI::Col::ButtonActive, vec4(1f, 0.2f, 0.2f, 1f));
+        if (UI::Button("YES, DELETE DATA", vec2(220, 0))) { 
             string path = IO::FromStorageFolder("test");
             IO::DeleteFolder(path.SubStr(0, path.Length - 5), true);
             positions = {};
             print("Deleted all data!"); 
-            UI::ShowNotification("All-Time stats reset!"); 
+            UI::ShowNotification("All data deleted!"); 
             UI::CloseCurrentPopup(); 
         }
         UI::PopStyleColor(3); UI::SameLine();
         if (UI::Button("Cancel", vec2(100, 0))) { UI::CloseCurrentPopup(); }
         UI::EndPopup();
-        
     }
 }
 

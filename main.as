@@ -89,9 +89,6 @@ void Render() {
         if (!Camera::IsBehind(positions[i])) {
             vec2 screenPos = Camera::ToScreenSpace(positions[i]);
             nvg::BeginPath();
-            //nvg::Circle(screenPos, 5);
-            //nvg::Stroke();
-            nvg::BeginPath();
             vec2 size = vec2(Setting_Size);
             nvg::Rect(screenPos - size/2, size);
             nvg::FillPaint(nvg::RadialGradient(screenPos, size.x/4, size.x/2, 
